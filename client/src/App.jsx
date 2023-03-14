@@ -5,22 +5,10 @@ import "./styles.css";
 const socket = io("http://localhost:8000");
 
 function App() {
+  const [room, setRoom] = useState('1');
   const [socketID, setSocketID] = useState("");
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-
-  const sendMessage = async () => {
-    if (currentMessage !== "") {
-      const messageData = {
-        sender: socketID,
-        message: currentMessage,
-      };
-
-      await socket.emit("send_message", messageData);
-      setMessageList((list) => [...list, messageData]);
-      setCurrentMessage("");
-    }
-  };
 
   useEffect(() => {
     socket.on("socket_id", (id) => {
@@ -37,6 +25,26 @@ function App() {
     };
   }, [socket]);
 
+  const sendMessage = async () => {
+    if (currentMessage !== "") {
+      const messageData = {
+        sender: socketID,
+        message: currentMessage,
+      };
+
+      await socket.emit("send", {room: room, message: messageData});
+      setCurrentMessage("");
+    }
+  };
+
+  const handleJoinRoom = () => {
+    socket.emit('join', room);
+  };
+
+  const handleLeaveRoom = () => {
+    socket.emit('leave', room);
+  };
+
   return (
     <div class="container">
       <h1>Realtime Chat</h1>
@@ -46,9 +54,8 @@ function App() {
           {messageList.map((msg) => {
             return (
               <div
-                class={`message ${
-                  msg.sender === socketID ? "my-msg" : "other-msg"
-                }`}
+                class={`message ${msg.sender === socketID ? "my-msg" : "other-msg"
+                  }`}
               >
                 {msg.message}
               </div>
@@ -64,6 +71,11 @@ function App() {
           onChange={(e) => setCurrentMessage(e.target.value)}
         />
         <button onClick={() => sendMessage(currentMessage)}>Send</button>
+      </div>
+      <div class="input-container">
+        <input type="text" value={room} onChange={(e) => setRoom(e.target.value)} />
+        <button onClick={handleJoinRoom}>Join Room</button>
+        <button onClick={handleLeaveRoom}>Leave Room</button>
       </div>
     </div>
   );

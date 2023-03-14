@@ -16,11 +16,36 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
+  // executed once a user registered to a socket
   io.to(socket.id).emit("socket_id", socket.id);
 
-  socket.on("send_message", (messageData) => {
-    socket.broadcast.emit("receive_message", messageData);
+  // Join a room
+  socket.on('join', (roomName) => {
+    console.log(`Socket ${socket.id} joining ${roomName}`);
+    socket.join(roomName);
   });
+
+  // Leave a room
+  socket.on('leave', (roomName) => {
+    console.log(`Socket ${socket.id} leaving ${roomName}`);
+    socket.leave(roomName);
+  });
+
+  // Send a message to a room
+  socket.on('send', (data) => {
+    console.log(`Socket ${socket.id} sending message to ${data.room}: ${data.message}`);
+    io.to(data.room).emit('receive_message', data.message);
+  });
+
+  // Disconnect
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+
+  // socket.on("send_message", (messageData) => {
+  //   console.log(messageData);
+  //   socket.broadcast.emit("receive_message", messageData);
+  // });
 });
 
 server.listen(8000, () => {
