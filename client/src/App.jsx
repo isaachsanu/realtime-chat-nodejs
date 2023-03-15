@@ -29,9 +29,8 @@ function App() {
   }, [socket]);
   
   useEffect(() => {
-    console.log(room.room, room.previousRoom)
-    socket.emit('join', room.room);
-    socket.emit('leave', room.previousRoom);
+    socket.emit('join', room.current);
+    socket.emit('leave', room.previous);
   }, [room]);
 
   const sendMessage = async () => {
@@ -41,7 +40,7 @@ function App() {
         message: currentMessage,
       };
 
-      await socket.emit("send", { room: room.room, message: messageData });
+      await socket.emit("send", { room: room.current, message: messageData });
       setCurrentMessage("");
     }
   };

@@ -1,14 +1,14 @@
 import { createContext, useContext, useReducer } from "react";
 
 const initialVal = {
-    room: "",
-    previousRoom: "",
+    current: "",
+    previous: "",
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
         case "SET_ROOM":
-            return { previousRoom: state.room, room: action.payload };
+            return { previous: state.current, current: action.payload };
         default:
             return state;
     }

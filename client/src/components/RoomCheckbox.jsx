@@ -5,7 +5,7 @@ export default function RoomCheckbox(param) {
 
     return (
         <div className="px-4 py-2 cursor-pointer" onClick={() => dispatch({ type: "SET_ROOM", payload: param.roomId })}>
-            <div className={"px-8 py-4 rounded-xl " + ((param.isActive) ? "bg-blue-300" : "bg-blue-100")}>
+            <div className={"px-8 py-4 rounded-xl " + ((room.current==param.roomId) ? "bg-blue-300" : "bg-blue-100")}>
                 {param.roomId}
             </div>
         </div>
