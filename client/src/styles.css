@@ -6,10 +6,10 @@
 .message {
   text-align: left;
   display: block;
-  padding: 5px 10px;
-  background-color: rgb(218, 218, 218);
+  padding: 8px 16px;
+  background-color: rgb(255, 255, 255);
   margin: 10px 0;
-  border-radius: 20px;
+  border-radius: 20px 20px 20px 0px;
   width: 40%;
   overflow-wrap: break-word;
   height: fit-content;
@@ -18,7 +18,8 @@
 .my-msg {
   text-align: right !important;
   margin-left: auto !important;
-  background-color: rgb(176, 228, 240);
+  background-color: rgb(242, 248, 255);
+  border-radius: 20px 20px 0px 20px;
 }
 
 input {
