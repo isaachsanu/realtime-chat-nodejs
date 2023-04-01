@@ -1,3 +1,5 @@
+import { IMessage } from "../models/Message";
+
 export const roomSockets = (io: any, socket: any) => {
     // Join a room
     socket.on('join', (roomName: string) => {
@@ -12,7 +14,7 @@ export const roomSockets = (io: any, socket: any) => {
     });
 
     // Send a message to a room
-    socket.on('send', (data: Message) => {
+    socket.on('send', (data: IMessage) => {
         console.log(`Socket ${socket.id} sending message to ${data.room}: ${data.message}`);
         io.to(data.room).emit('receive_message', data);
     });
