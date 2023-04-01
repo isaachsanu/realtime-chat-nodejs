@@ -18,7 +18,7 @@ const mongooseOptions: any = {
   useUnifiedTopology: true,
 };
 
-const mongoUrl = 'mongodb+srv://eeza:7bnr4p3ExPo7yRhG@cluster0.kyx7cnb.mongodb.net/?retryWrites=true&w=majority';
+const mongoUrl = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority`;
 mongoose.connect(mongoUrl, mongooseOptions).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
