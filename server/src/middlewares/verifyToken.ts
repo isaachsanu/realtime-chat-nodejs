@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { Secret } from 'jsonwebtoken';
-import { AuthenticationError } from '../controllers/authController';
+import AuthenticationError from '../exceptions/AuthenticationError';
 
 const secretKey: Secret = process.env.JWT_SECRET || "defaultkey";
 
